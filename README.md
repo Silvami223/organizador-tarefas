@@ -2,7 +2,7 @@
 
 Um organizador de tarefas moderno, responsivo e multilíngue, com suporte a temas claro/escuro, categorias, prioridades e animações suaves. Ideal para manter sua produtividade em dia com estilo.
 
-![Preview do projeto](/to-do%20list/assets/preview.png) <!-- Coloque uma imagem de demonstração do projeto aqui -->
+![Preview do projeto](preview.png) <!-- Coloque uma imagem de demonstração do projeto aqui -->
 
 ---
 
@@ -31,7 +31,7 @@ Um organizador de tarefas moderno, responsivo e multilíngue, com suporte a tema
 
 | Modo Claro | Modo Escuro |
 |-----------|-------------|
-| ![Light](/to-do%20list/assets/light-mode.png) | ![Dark](/to-do%20list/assets/dark-mode.png) |
+| ![Light](light-mode.png) | ![Dark](dark-mode.png) |
 
 ---
 
