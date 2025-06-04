@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title data-i18n="title">Organizador de Tarefas</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.1/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet"/>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="i18n.js"></script>
+  <script defer src="app.js"></script>
+  <style>
+    html.dark {
+      --bg-main: #0f172a;
+      --bg-secondary: #1e293b;
+      --text-main: #f1f5f9;
+      --text-secondary: #cbd5e1;
+      --border-color: #334155;
+      --highlight: #38bdf8;
+    }
+    html.light {
+      --bg-main: #f9fafb;
+      --bg-secondary: #ffffff;
+      --text-main: #1f2937;
+      --text-secondary: #4b5563;
+      --border-color: #e5e7eb;
+      --highlight: #3b82f6;
+    }
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+    }
+  </style>
+</head>
+<body class="transition-colors duration-500">
+  <div class="max-w-2xl mx-auto mt-10 p-6 rounded-xl shadow-lg animate__animated animate__fadeIn" style="background-color: var(--bg-secondary); color: var(--text-main);">
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-3xl font-bold" data-i18n="title">Organizador de Tarefas</h1>
+      <div class="flex items-center gap-2">
+        <button onclick="setLang('pt')">🇧🇷</button>
+        <button onclick="setLang('en')">🇺🇸</button>
+        <button onclick="toggleDarkMode()">
+          <i id="themeIcon" class="lucide" data-lucide="moon"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="mb-4 flex flex-wrap gap-2">
+      <input type="text" id="taskInput" placeholder="Nova tarefa..." class="flex-1 p-2 border rounded" style="background-color: var(--bg-secondary); border-color: var(--border-color); color: var(--text-main);" />
+      <select id="categorySelect" class="p-2 border rounded" style="background-color: var(--bg-secondary); border-color: var(--border-color); color: var(--text-main);">
+        <option value="work" data-i18n-option="work">Trabalho</option>
+        <option value="study" data-i18n-option="study">Estudos</option>
+        <option value="personal" data-i18n-option="personal">Pessoal</option>
+      </select>
+      <select id="prioritySelect" class="p-2 border rounded" style="background-color: var(--bg-secondary); border-color: var(--border-color); color: var(--text-main);">
+        <option value="low" data-i18n-option="low">Baixa</option>
+        <option value="medium" data-i18n-option="medium">Média</option>
+        <option value="high" data-i18n-option="high">Alta</option>
+      </select>
+      <button onclick="addTask()" class="px-4 rounded text-white" style="background-color: var(--highlight);" data-i18n="add">Adicionar</button>
+    </div>
+
+<div class="mb-4">
+  <label class="mr-2" data-i18n="filter">Filtrar:</label>
+  <select id="filterSelect" onchange="renderTasks()" class="p-2 border rounded" style="background-color: var(--bg-secondary); border-color: var(--border-color); color: var(--text-main);">
+    <option value="all" data-i18n-option="all">Todas</option>
+    <option value="done" data-i18n-option="done">Concluídas</option>
+    <option value="todo" data-i18n-option="todo">Pendentes</option>
+  </select>
+</div>
+
+<!-- NOVOS FILTROS: Categoria e Prioridade -->
+<div class="mb-4 flex flex-wrap gap-2">
+  <select id="filterCategorySelect" onchange="renderTasks()" class="p-2 border rounded" style="background-color: var(--bg-secondary); border-color: var(--border-color); color: var(--text-main);">
+    <option value="all" data-i18n-option="allCategories">Todas as Categorias</option>
+    <option value="work" data-i18n-option="work">Trabalho</option>
+    <option value="study" data-i18n-option="study">Estudos</option>
+    <option value="personal" data-i18n-option="personal">Pessoal</option>
+  </select>
+
+  <select id="filterPrioritySelect" onchange="renderTasks()" class="p-2 border rounded" style="background-color: var(--bg-secondary); border-color: var(--border-color); color: var(--text-main);">
+    <option value="all" data-i18n-option="allPriorities">Todas as Prioridades</option>
+    <option value="low" data-i18n-option="low">Baixa</option>
+    <option value="medium" data-i18n-option="medium">Média</option>
+    <option value="high" data-i18n-option="high">Alta</option>
+  </select>
+</div>
+
+    <ul id="taskList" class="space-y-2"></ul>
+  </div>
+
+  <script>
+   function toggleDarkMode() {
+  const html = document.documentElement;
+  const isDark = html.classList.toggle("dark");
+  html.classList.toggle("light", !isDark);
+  localStorage.setItem("theme", isDark ? "dark" : "light");
+  document.getElementById("themeIcon").setAttribute("data-lucide", isDark ? "sun" : "moon");
+  lucide.createIcons();
+}
+
+
+window.addEventListener("DOMContentLoaded", () => {
+  const savedTheme = localStorage.getItem("theme");
+  const html = document.documentElement;
+  if (savedTheme === "dark") {
+    html.classList.add("dark");
+    html.classList.remove("light");
+  } else {
+    html.classList.remove("dark");
+    html.classList.add("light");
+  }
+  document.getElementById("themeIcon").setAttribute("data-lucide", html.classList.contains("dark") ? "sun" : "moon");
+  lucide.createIcons();
+});
+
+  </script>
+</body>
+</html>
